@@ -1,0 +1,19 @@
+<!-- <app-employee></app-employee> -->
+<!-- <app-employee-custom></app-employee-custom> -->
+<!-- <ul>
+    <li><a mat-button href="/#/ngrx">NgRx Example</a></li>
+    <li><a mat-button href="/#/empform">Employee Registration Form</a></li>
+    <li><a mat-button href="/#/customMatGrid">Custom/Reusable Mat Grid</a></li>
+    <li class="nav-item" *ngFor="let route of existingRoutes$ | async">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="route.path">{{route.displayName | titlecase}}</a>
+    </li>
+</ul> -->
+<div class="nav-btn">
+    <button mat-raised-button ><a id="ngrx" href="/#/ngrx" class="first" name="ngrx">NgRx Example</a></button>
+    <button mat-raised-button ><a href="/#/empform">Employee Registration Form</a></button>
+    <button mat-raised-button ><a href="/#/customMatGrid">Custom/Reusable Mat Grid</a></button>
+    <button mat-raised-button *ngFor="let route of existingRoutes$ | async">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="route.path">{{route.displayName | titlecase}}</a>
+    </button>
+</div>
+<router-outlet></router-outlet>

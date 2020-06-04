@@ -1,0 +1,169 @@
+<div fxLayout="row" fxLayoutGap="12px">
+    <mat-card style="max-width: 500px;margin: auto;border: 1px solid;">
+      <mat-card-actions align="middle">
+        <button mat-raised-button color="primary" (click)="onSetTheme('default-theme')">Default</button>
+        <button mat-raised-button color="primary" (click)="onSetTheme('dark-theme')">Dark</button>
+        <button mat-raised-button color="primary" (click)="onSetTheme('light-theme')">Light</button>
+      </mat-card-actions>
+    </mat-card>
+    <mat-card style="max-width: 500px;margin: auto;border: 1px solid;" *ngFor="let card of formFieldsCards; let indx = index">
+      <form #f="ngForm">
+        <span class="emp-header">Employee Registration Form</span>
+        <div *ngFor="let field of card">
+          <mat-grid-list cols="2" rowHeight="5:1" *ngIf="field.uiElementType == 'button'">
+            <mat-grid-tile>
+              <label>{{field.propertyLabel}} <span *ngIf="field.required">*</span></label>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div style="position: absolute; left: 2px;">
+                <button id="{{field.propertyID}}-{{indx}}" mat-raised-button color="primary">
+                  {{field.defaultValue}}
+                </button>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="2" rowHeight="5:1" *ngIf="field.uiElementType == 'buttonGroup'">
+            <mat-grid-tile>
+              <label>{{field.propertyLabel}} <span *ngIf="field.required">*</span></label>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div style="position: absolute; left: 2px;">
+                <mat-button-toggle-group (change)="onChange($event, field)" name="buttonGroupField"
+                  [(ngModel)]="field.value">
+                  <mat-button-toggle *ngFor="let data of field.dataEnum" id="{{field.propertyID}}-{{indx}}"
+                    value="{{data}}" style="font-size: 14px;">
+                    {{data}}
+                  </mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+  
+          <mat-grid-list cols="2" rowHeight="5:1" *ngIf="field.uiElementType == 'checkbox'">
+            <mat-grid-tile><label>{{field.propertyLabel}} <span *ngIf="field.required">*</span></label></mat-grid-tile>
+            <mat-grid-tile>
+              <div style="position: absolute; left: 2px;">
+                <mat-checkbox (change)="onChange($event, field)" id="{{field.propertyID}}-{{indx}}"
+                  value="{{field.defaultValue}}" name="checkboxField" [(ngModel)]="field.value">{{field.placeholder}}
+                </mat-checkbox>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+  
+          <mat-grid-list cols="2" rowHeight="70px" *ngIf="field.uiElementType == 'datetime'" >
+            <mat-grid-tile>
+              <mat-label>{{field.propertyLabel}} <span *ngIf="field.required">*</span></mat-label>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div style="position: absolute; left: 2px;">
+                <mat-form-field>
+                  <mat-label>{{field.placeholder}}</mat-label>
+                  <input matInput [matDatepicker]="picker" name="datetimeField" [(ngModel)]="field.value"
+                    (change)="onChange($event, field)" id="{{field.propertyID}}-{{indx}}">
+                  <mat-datepicker-toggle matSuffix [for]="picker">
+                    <mat-icon matDatepickerToggleIcon>></mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker>
+                  </mat-datepicker>
+                </mat-form-field>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+  
+          <mat-grid-list cols="2" rowHeight="5:1" *ngIf="field.uiElementType == 'radio'">
+            <mat-grid-tile><label>{{field.propertyLabel}} <span *ngIf="field.required">*</span></label></mat-grid-tile>
+            <mat-grid-tile>
+              <div style="position: absolute; left: 2px;">
+                <mat-radio-group (change)="onChange($event, field)" name="radioButtonField" [(ngModel)]="field.value"
+                  id="{{field.propertyID}}-{{indx}}" required #radioButtonField="ngModel">
+                  <mat-radio-button value="{{field.defaultValue}}">
+                    {{field.placeholder}}
+                  </mat-radio-button>
+                </mat-radio-group>
+                <div *ngIf="radioButtonField.invalid && (radioButtonField.dirty || radioButtonField.touched)" class="alert alert-danger">
+                  <div *ngIf="radioButtonField.errors.required">
+                    *Required Field
+                  </div>
+                </div>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+  
+          <mat-grid-list cols="2" rowHeight="70px" *ngIf="field.uiElementType == 'select'">
+            <mat-grid-tile><label>{{field.propertyLabel}} <span *ngIf="field.required">*</span></label></mat-grid-tile>
+            <mat-grid-tile>
+              <div style="position: absolute; left: 2px;">
+                <mat-form-field>
+                  <mat-label>{{field.placeholder}}</mat-label>
+                  <mat-select name="selectField" [(ngModel)]="field.value" (change)="onChange($event, field)">
+                    <mat-option *ngFor="let data of field.dataEnum" id="{{field.propertyID}}-{{indx}}" [value]="data">
+                      {{data}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+  
+          <mat-grid-list cols="2" rowHeight="5:1" *ngIf="field.uiElementType == 'slider'">
+            <mat-grid-tile><label>{{field.propertyLabel}} <span *ngIf="field.required">*</span></label></mat-grid-tile>
+            <mat-grid-tile>
+              <div style="position: absolute; left: 2px;">
+                <mat-slider id="{{field.propertyID}}-{{indx}}" name="sliderField" [(ngModel)]="field.value"
+                  (change)="onChange($event, field)" tickInterval="1000" min="1" max="100000">
+                  {{field.placeholder}}</mat-slider>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+  
+          <mat-grid-list cols="2" rowHeight="5:1" *ngIf="field.uiElementType == 'text'">
+            <mat-grid-tile><label>{{field.propertyLabel}} <span *ngIf="field.required">*</span></label></mat-grid-tile>
+            <mat-grid-tile>
+              <div style="position: absolute; left: 2px;">
+                <input matInput id="{{field.propertyID}}-{{indx}}" placeholder="{{field.placeholder}}"
+                  value="{{field.defaultValue}}" id="{{field.propertyID}}" name="textField" required
+                  [(ngModel)]="field.value" (change)="onChange($event, field)" #textField="ngModel" />
+                <div *ngIf="textField.invalid && (textField.dirty || textField.touched)" class="alert alert-danger">
+                  <div *ngIf="textField.errors.required">
+                    *Required Field
+                  </div>
+                </div>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+  
+          <mat-grid-list cols="2" rowHeight="70px" *ngIf="field.uiElementType == 'autocomplete'">
+            <mat-grid-tile><label>{{field.propertyLabel}} <span *ngIf="field.required">*</span></label></mat-grid-tile>
+            <mat-grid-tile>
+              <div style="position: absolute; left: 2px;">
+                <mat-form-field>
+                  <input type="text" placeholder="{{field.placeholder}}" matInput [matAutocomplete]="auto"
+                    id="{{field.propertyID}}-{{indx}}" name="autocompleteField" [(ngModel)]="field.value"
+                    (change)="onChange($event, field)">
+                  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                    <mat-option *ngFor="let data of field.dataEnum" [value]="data">
+                      {{data}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+        <mat-card-actions align="middle">
+          <button mat-raised-button color="accent" type="submit" [disabled]="f.invalid"
+            (click)="onSubmit(f)">Submit</button>
+          <button mat-raised-button color="accent" (click)="onClear()">Clear</button>
+        </mat-card-actions>
+        <mat-card-actions align="end">
+          <button mat-button color="accent" (click)="replicateFormArr()">Add New Form</button>
+          <button mat-button color="accent" (click)="delete()">Delete</button>
+        </mat-card-actions>
+      </form>
+    </mat-card>
+  </div>
+  <style>
+    mat-button-toggle {
+      width: 75px;
+      font-size: 8px;
+    }
+  </style>
