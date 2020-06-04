@@ -1,0 +1,9 @@
+[    
+    {
+        "path": "moduleA",
+        "location": "./assets/modulea.umd.js",
+        "moduleName": "ModuleaModule",
+        "description": "Dynamic Module Loader",
+        "displayName": "Dynamic Module"
+    }
+]

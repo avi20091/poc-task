@@ -1,0 +1,21 @@
+{
+  "name": "modulea",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^8.2.14",
+    "@angular/core": "^8.2.14"
+  },
+  "main": "bundles/modulea.umd.js",
+  "module": "fesm5/modulea.js",
+  "es2015": "fesm2015/modulea.js",
+  "esm5": "esm5/modulea.js",
+  "esm2015": "esm2015/modulea.js",
+  "fesm5": "fesm5/modulea.js",
+  "fesm2015": "fesm2015/modulea.js",
+  "typings": "modulea.d.ts",
+  "metadata": "modulea.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}
